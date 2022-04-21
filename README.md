@@ -11,7 +11,7 @@ https://github.com/krynv/video-streaming/
 git clone git@github.com:krynv/video-streaming-with-mongodb.git && npm i
 ```
 
-Have`docker` & `docker-compose` installed.
+Have `docker` & `docker-compose` installed.
 
 ```
 docker-compose up -d
