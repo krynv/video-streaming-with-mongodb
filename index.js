@@ -2,8 +2,7 @@ const express = require('express');
 const app = express();
 const fs = require('fs');
 const mongodb = require('mongodb');
-// const url = 'mongodb://user:password@db:27017';
-const url = 'mongodb://localhost:27017';
+const url = 'mongodb://user:password@db:27017';
 
 app.get('/', (req, res) => res.sendFile(`${__dirname}/index.html`));
 
