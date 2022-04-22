@@ -2,7 +2,8 @@ const express = require('express');
 const app = express();
 const fs = require('fs');
 const mongodb = require('mongodb');
-const url = 'mongodb://user:password@db:27017';
+// const url = 'mongodb://user:password@db:27017';
+const url = 'mongodb://localhost:27017';
 
 app.get('/', (req, res) => res.sendFile(`${__dirname}/index.html`));
 
@@ -45,7 +46,8 @@ app.get('/mongo-video', (req, res) => {
             const start = Number(range.replace(/\D/g, ''));
             const end = length - 1;
 
-            const contentLength = end - start + 1;
+            const contentLength = (end - start) + 1;
+
             const headers = {
                 'Content-Range': `bytes ${start}-${end}/${length}`,
                 'Accept-Ranges': 'bytes',
@@ -55,8 +57,10 @@ app.get('/mongo-video', (req, res) => {
 
             res.writeHead(206, headers);
 
-            const bucket = new mongodb.GridFSBucket(db, 'gridfsdownload');
-            const downloadStream = bucket.openDownloadStreamByName('bigbuck', { start });
+            const bucket = new mongodb.GridFSBucket(db);
+            const downloadStream = bucket.openDownloadStreamByName('bigbuck', {
+                start, end: length
+            });
 
             downloadStream.pipe(res);
         });
